@@ -13,14 +13,16 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera automaticamente a id da classe por indentação.
     private Long id;
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE") // Usa o fuso horario padrão pra banco de dados
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE") // Usa o fuso horário padrão pra banco de dados
     private Instant moment;
     private OrderStatus status;
 
     @ManyToOne// Cria relação de muitos pedidos para um cliente (na classe pedido, muitos pedidos para um cliente)
     @JoinColumn(name = "client_id") // Cria a chave estrangeira para ligar as duas tabelas desta relação.
     private User client;
-    // Todo -> Incrementar associação com classe Payment
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
 
     // Construtores
@@ -28,7 +30,8 @@ public class Order {
 
     }
 
-    public Order(Instant moment, OrderStatus status, User client) {
+    public Order(Long id, Instant moment, OrderStatus status, User client) {
+        this.id = id;
         this.moment = moment;
         this.status = status;
         this.client = client;
