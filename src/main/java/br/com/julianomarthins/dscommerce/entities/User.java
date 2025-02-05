@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity // Cria associação com banco de dados.
-@Table(name="tb_user") // Define o nome da tabela no banco de dados.
+@Table(name = "tb_user") // Define o nome da tabela no banco de dados.
 public class User {
 
     // Atributos de classe
@@ -19,15 +21,17 @@ public class User {
     private String phone;
     private LocalDate birthDate;
     private String password;
-    // private String roles; -> Realizar implementação durante programação da segurança do sistema.
+    // private String roles; TODO -> Realizar implementação durante programação da segurança do sistema.
 
+    @OneToMany(mappedBy = "client") // Relação um cliente para muitos pedidos
+    private List<Order> orders = new ArrayList<>();
 
     // Construtores
-    public User(){
+    public User() {
 
     }
 
-    public User(String name, String email, String phone, LocalDate birthDate, String password){
+    public User(String name, String email, String phone, LocalDate birthDate, String password) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -85,6 +89,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
     // endregion
 }
