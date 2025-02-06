@@ -13,7 +13,8 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera automaticamente a id conforme indentação
     private Long id;
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE") // Utilizada o timezone de londres, padrão em banco de dados
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    // Utilizada o timezone de londres, padrão em banco de dados
     private Instant moment;
 
     @OneToOne // Cria relação um para um entre payment e order.
@@ -22,11 +23,11 @@ public class Payment {
 
 
     // Construtores
-    public Payment(){
+    public Payment() {
 
     }
 
-    public Payment(Long id, Instant moment, Order order){
+    public Payment(Long id, Instant moment, Order order) {
         this.id = id;
         this.moment = moment;
         this.order = order;

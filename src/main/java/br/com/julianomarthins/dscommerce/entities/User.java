@@ -1,30 +1,32 @@
 package br.com.julianomarthins.dscommerce.entities;
 
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity // Cria associação com banco de dados.
+@Entity // Cria associação da classe com banco de dados.
 @Table(name = "tb_user") // Define o nome da tabela no banco de dados.
 public class User {
 
     // Atributos de classe
-    @Id // Define chave primária no banco de dados
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera automaticamente a id da classe por indentação.
+
+    @Id // Define como chave primária no banco de dados
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera automaticamente a id por indentação.
     private Long id;
     private String name;
+
+    @Column(unique = true) // Configura a coluna email como única no banco de dados.
     private String email;
     private String phone;
     private LocalDate birthDate;
     private String password;
+
     // private String roles; TODO -> Realizar implementação durante programação da segurança do sistema.
 
     @OneToMany(mappedBy = "client") // Relação um cliente para muitos pedidos
     private List<Order> orders = new ArrayList<>();
+
 
     // Construtores
     public User() {
@@ -42,8 +44,6 @@ public class User {
 
 
     // region Getters & Setters
-
-
     public Long getId() {
         return id;
     }
