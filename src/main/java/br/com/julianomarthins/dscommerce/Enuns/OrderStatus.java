@@ -1,4 +1,4 @@
-package br.com.julianomarthins.dscommerce.entities;
+package br.com.julianomarthins.dscommerce.Enuns;
 
 public enum OrderStatus {
 

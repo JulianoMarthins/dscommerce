@@ -3,6 +3,7 @@ package br.com.julianomarthins.dscommerce.entities;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.Objects;
 
 @Entity // Mapeia classe como entidade do banco de dados
 @Table(name = "tb_payment") // Nomeia tabela no banco de dados
@@ -33,15 +34,29 @@ public class Payment {
         this.order = order;
     }
 
-    // region Getters & Setters
+
+    // Equals & HashCode
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Payment payment = (Payment) o;
+        return Objects.equals(id, payment.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 
 
+    // Getters & Setters
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
-        id = id;
+        this.id = id;
     }
 
     public Instant getMoment() {
@@ -59,5 +74,4 @@ public class Payment {
     public void setOrder(Order order) {
         this.order = order;
     }
-    // endregion
 }

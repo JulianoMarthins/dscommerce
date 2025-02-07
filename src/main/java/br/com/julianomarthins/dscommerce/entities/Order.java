@@ -1,17 +1,19 @@
 package br.com.julianomarthins.dscommerce.entities;
 
+import br.com.julianomarthins.dscommerce.Enuns.OrderStatus;
 import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity // Transforma a classe em tabela no banco de dados
 @Table(name = "tb_order") // Nome a tabela conforme parâmetro passado em argumento
 public class Order {
 
-    // Atributos de class
+    // Atributos da classe
     @Id // Define a a id como chave primária
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera automaticamente a id da classe por indentação.
     private Long id;
@@ -44,9 +46,23 @@ public class Order {
 
     }
 
+
+    // Equals & HashCode
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+        return Objects.equals(id, order.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+
     // Getters & Setters
-
-
     public Long getId() {
         return id;
     }
@@ -91,7 +107,7 @@ public class Order {
         return items;
     }
 
-   public List<Product> getProducts(){
+    public List<Product> getProducts() {
         return this.items.stream().map(OrderItem::getProduct).toList();
-   }
+    }
 }

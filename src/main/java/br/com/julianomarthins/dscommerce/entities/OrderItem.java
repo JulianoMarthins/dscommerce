@@ -19,10 +19,10 @@ public class OrderItem {
 
 
     // Construtores
-    public OrderItem(){
+    public OrderItem() {
     }
 
-    public OrderItem(Order order, Product product, Integer quantity, Double price){
+    public OrderItem(Order order, Product product, Integer quantity, Double price) {
         id.setOrder(order);
         id.setProduct(product);
         this.quantity = quantity;
@@ -30,12 +30,12 @@ public class OrderItem {
     }
 
 
-
-    // region Equals & HashCode
+    // Equals & HashCode
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
+
         OrderItem orderItem = (OrderItem) o;
         return Objects.equals(id, orderItem.id);
     }
@@ -44,25 +44,24 @@ public class OrderItem {
     public int hashCode() {
         return Objects.hashCode(id);
     }
-    //endregion
 
 
-    // region Getters & Setters
+    // Getters & Setters
 
 
     public Order getOrder() {
         return id.getOrder();
     }
 
-    public void setOrder(Order order){
+    public void setOrder(Order order) {
         this.id.setOrder(order);
     }
 
-    public Product getProduct(){
+    public Product getProduct() {
         return id.getProduct();
     }
 
-    public void setProduct(Product product){
+    public void setProduct(Product product) {
         this.id.setProduct(product);
     }
 
@@ -85,5 +84,5 @@ public class OrderItem {
     public void setPrice(Double price) {
         this.price = price;
     }
-    //endregion
+
 }

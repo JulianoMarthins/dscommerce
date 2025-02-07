@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -47,13 +48,12 @@ public class Product {
     */
 
 
-
     // Construtores
-    public Product(){
+    public Product() {
 
     }
 
-    public Product(Long id, String name, String description, Double price, String imgUrl){
+    public Product(Long id, String name, String description, Double price, String imgUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -62,9 +62,24 @@ public class Product {
     }
 
 
-    // region Getters & Setters
+    //Equals & HashCode
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
 
-    public Set<Category> getCategories(){
+        Product product = (Product) o;
+        return Objects.equals(id, product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+
+    // Getters & Setters
+
+    public Set<Category> getCategories() {
         return categories;
     }
 
@@ -108,15 +123,14 @@ public class Product {
         this.imgUrl = imgUrl;
     }
 
-    public Set<OrderItem> getItems(){
+    public Set<OrderItem> getItems() {
         return items;
     }
 
     // Neste código é feito uma conversão de uma estrutura de dados do tipo HashSet para um List.
     // Acessamos o items com o .stream(), e percorremos cada elemento do HashSet usando o map, neste,
     // é feito uma expressão lambda para pegar cada objeto do tipo order e depois convertendo ele para uma lista.
-    public List<Order> getOrders(){
+    public List<Order> getOrders() {
         return this.items.stream().map(OrderItem::getOrder).toList();
     }
-    // endregion
 }
