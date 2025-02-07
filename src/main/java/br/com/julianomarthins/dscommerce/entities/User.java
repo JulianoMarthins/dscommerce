@@ -1,5 +1,6 @@
 package br.com.julianomarthins.dscommerce.entities;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

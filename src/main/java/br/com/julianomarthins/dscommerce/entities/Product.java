@@ -3,6 +3,7 @@ package br.com.julianomarthins.dscommerce.entities;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,6 +34,9 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
 
     /*
      Acima temos a annotation @JoinTable, nela dado os dados para a criação da tabela de associação entre as classes
@@ -102,6 +106,17 @@ public class Product {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public Set<OrderItem> getItems(){
+        return items;
+    }
+
+    // Neste código é feito uma conversão de uma estrutura de dados do tipo HashSet para um List.
+    // Acessamos o items com o .stream(), e percorremos cada elemento do HashSet usando o map, neste,
+    // é feito uma expressão lambda para pegar cada objeto do tipo order e depois convertendo ele para uma lista.
+    public List<Order> getOrders(){
+        return this.items.stream().map(OrderItem::getOrder).toList();
     }
     // endregion
 }

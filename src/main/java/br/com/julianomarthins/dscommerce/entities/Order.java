@@ -3,6 +3,9 @@ package br.com.julianomarthins.dscommerce.entities;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity // Transforma a classe em tabela no banco de dados
 @Table(name = "tb_order") // Nome a tabela conforme parâmetro passado em argumento
@@ -24,6 +27,9 @@ public class Order {
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
 
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
+
 
     // Construtores
     public Order() {
@@ -38,7 +44,9 @@ public class Order {
 
     }
 
-    // region Getters & Setters
+    // Getters & Setters
+
+
     public Long getId() {
         return id;
     }
@@ -70,5 +78,20 @@ public class Order {
     public void setClient(User client) {
         this.client = client;
     }
-    //endregion
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
+   public List<Product> getProducts(){
+        return this.items.stream().map(OrderItem::getProduct).toList();
+   }
 }
