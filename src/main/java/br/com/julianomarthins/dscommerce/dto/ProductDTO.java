@@ -25,6 +25,7 @@ public class ProductDTO {
         this.img = img;
     }
 
+
     public ProductDTO(Product entity) {
         this.id = entity.getId();
         this.name = entity.getName();
@@ -32,6 +33,7 @@ public class ProductDTO {
         this.price = entity.getPrice();
         this.img = entity.getImgUrl();
     }
+
 
 
     // region Getters
