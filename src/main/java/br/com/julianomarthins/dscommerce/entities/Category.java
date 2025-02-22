@@ -7,13 +7,13 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "tb_category")
+@Entity // Annotation serve para criar uma tabela desta classe no banco de dados
+@Table(name = "tb_category") // Annotation serve para nomear a tabela do banco de dados
 public class Category {
 
     // Atributos de classe
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Annotation serve para tornar o atributo abaixo, uma chave primária no banco de dados
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Annotation serve para gerar automaticamente as ID conform indentação
     private Long id;
     private String name;
 

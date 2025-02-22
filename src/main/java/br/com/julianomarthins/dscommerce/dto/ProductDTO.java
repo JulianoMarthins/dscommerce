@@ -14,9 +14,10 @@ public class ProductDTO {
 
 
     // Construtores
-    public ProductDTO(){
+    public ProductDTO() {
     }
-    public ProductDTO(Long id, String name, String description, Double price, String img){
+
+    public ProductDTO(Long id, String name, String description, Double price, String img) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -24,7 +25,7 @@ public class ProductDTO {
         this.img = img;
     }
 
-    public ProductDTO(Product entity){
+    public ProductDTO(Product entity) {
         this.id = entity.getId();
         this.name = entity.getName();
         this.description = entity.getDescription();
