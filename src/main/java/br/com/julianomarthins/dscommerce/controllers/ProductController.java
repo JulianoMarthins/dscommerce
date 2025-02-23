@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -20,19 +21,21 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    // Mapeia esta função como "GET", o valor no argumento é o caminho do endpoint.
+    // Retorna ao usuário um produto específico conforme seu id
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) { // Annotation PathVariable torta a variável Long id como o valor do caminho do produto
         ProductDTO dto = service.findById(id);
         return ResponseEntity.ok(dto);
     }
 
+    // Retorna ao usuário os produtos paginados
     @GetMapping
     public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
         Page<ProductDTO> dto = service.findAll(pageable);
         return ResponseEntity.ok(dto);
     }
 
+    // Insere um produto no banco de dados
     @PostMapping
     public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
         dto = service.insert(dto);
@@ -40,11 +43,20 @@ public class ProductController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    // Atualiza um produto do banco de dados
     @PutMapping(value = "{id}")
     public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto){
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }
+
+    // Deleta um produto do banco de dados, conforme seu id
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 }
