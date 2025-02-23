@@ -3,12 +3,12 @@ package br.com.julianomarthins.dscommerce.services;
 import br.com.julianomarthins.dscommerce.dto.ProductDTO;
 import br.com.julianomarthins.dscommerce.entities.Product;
 import br.com.julianomarthins.dscommerce.respositories.ProductRepository;
+import br.com.julianomarthins.dscommerce.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class ProductService {
@@ -20,7 +20,9 @@ public class ProductService {
     // Retorna ao usuário um produto filtrado pelo id
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id){
-        Product product = repository.findById(id).get();
+        Product product = repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Produto não encontrado no banco de dados")
+        );
         return new ProductDTO(product);
     }
 

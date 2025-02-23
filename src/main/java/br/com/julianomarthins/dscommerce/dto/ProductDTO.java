@@ -14,9 +14,6 @@ public class ProductDTO {
 
 
     // Construtores
-    public ProductDTO() {
-    }
-
     public ProductDTO(Long id, String name, String description, Double price, String img) {
         this.id = id;
         this.name = name;

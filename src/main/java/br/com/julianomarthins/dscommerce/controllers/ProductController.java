@@ -1,13 +1,11 @@
 package br.com.julianomarthins.dscommerce.controllers;
 
 import br.com.julianomarthins.dscommerce.dto.ProductDTO;
-import br.com.julianomarthins.dscommerce.entities.Product;
 import br.com.julianomarthins.dscommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,7 +21,7 @@ public class ProductController {
 
     // Retorna ao usuário um produto específico conforme seu id
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) { // Annotation PathVariable torta a variável Long id como o valor do caminho do produto
+    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
         ProductDTO dto = service.findById(id);
         return ResponseEntity.ok(dto);
     }
@@ -45,18 +43,17 @@ public class ProductController {
 
     // Atualiza um produto do banco de dados
     @PutMapping(value = "{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto){
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }
 
     // Deleta um produto do banco de dados, conforme seu id
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 
 
 }
