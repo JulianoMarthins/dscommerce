@@ -1,6 +1,6 @@
 package br.com.julianomarthins.dscommerce.entities;
 
-import br.com.julianomarthins.dscommerce.Enuns.OrderStatus;
+import br.com.julianomarthins.dscommerce.enuns.OrderStatus;
 import jakarta.persistence.*;
 
 import java.time.Instant;

@@ -14,6 +14,9 @@ public class ProductDTO {
 
 
     // Construtores
+   public ProductDTO(){
+
+   }
     public ProductDTO(Long id, String name, String description, Double price, String img) {
         this.id = id;
         this.name = name;
@@ -32,8 +35,7 @@ public class ProductDTO {
     }
 
 
-
-    // region Getters
+    // Getters
     public Long getId() {
         return id;
     }
@@ -53,5 +55,4 @@ public class ProductDTO {
     public String getImg() {
         return img;
     }
-    // endregion
 }

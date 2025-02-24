@@ -5,10 +5,10 @@ import java.time.Instant;
 public class CustomError {
 
     // Atributos
-    private Instant timestamp;
-    private Integer status;
-    private String error;
-    private String path;
+    private final Instant timestamp;
+    private final Integer status;
+    private final String error;
+    private final String path;
 
 
     // Construtor
