@@ -36,8 +36,8 @@ public class ProductService {
 
     // Retorna ao usuário todos os produtos organizados por páginas
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(Pageable pageable) {
-        Page<Product> result = repository.findAll(pageable);
+    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+        Page<Product> result = repository.searchByName(name, pageable);
         return result.map(ProductDTO::new);
     }
 
