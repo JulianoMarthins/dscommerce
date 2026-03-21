@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -20,14 +21,16 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    // Retorna ao usuário um produto específico conforme seu id
+    // Retorna a pesquisa de um produto pelo ID
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
         ProductDTO dto = service.findById(id);
         return ResponseEntity.ok(dto);
     }
 
-    // Retorna ao usuário os produtos paginados
+
+    // Retorna todos os produtos ao usuário
     @GetMapping
     public ResponseEntity<Page<ProductDTO>> findAll(
             @RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {
@@ -35,7 +38,9 @@ public class ProductController {
         return ResponseEntity.ok(dto);
     }
 
-    // Insere um produto no banco de dados
+
+    // Adicionar um novo produto no banco de dados
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
         dto = service.insert(dto);
@@ -44,6 +49,7 @@ public class ProductController {
     }
 
     // Atualiza um produto do banco de dados
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> update(@PathVariable Long id,@Valid @RequestBody ProductDTO dto) {
         dto = service.update(id, dto);
@@ -51,6 +57,7 @@ public class ProductController {
     }
 
     // Deleta um produto do banco de dados, conforme seu id
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
