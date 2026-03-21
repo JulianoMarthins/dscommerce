@@ -4,9 +4,7 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity // Cria associação da classe com banco de dados.
 @Table(name = "tb_user") // Define o nome da tabela no banco de dados.
@@ -24,7 +22,13 @@ public class User {
     private LocalDate birthDate;
     private String password;
 
-    // private String roles; TODO -> Realizar implementação durante programação da segurança do sistema.
+    @ManyToMany
+    @JoinTable(
+            name = "tb_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "client") // Relação um cliente para muitos pedidos
     private List<Order> orders = new ArrayList<>();
@@ -113,4 +117,21 @@ public class User {
         return orders;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void addRole(Role role){
+        roles.add(role);
+    }
+
+    // Testa se o usuário tem um role
+    public boolean hasRole(String roleName){
+        for (Role role : roles){
+            if (role.getAuthority().equals(roleName)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
