@@ -4,19 +4,24 @@ import br.com.julianomarthins.dscommerce.entities.OrderItem;
 
 public class OrderItemDTO {
 
+    // Atributos da classe
     private Long productId;
     private String name;
     private Double price;
     private Integer quantity;
+    private String imgUrl;
 
+
+    // Construtores
     public OrderItemDTO(){
     }
 
-    public OrderItemDTO(Long productId, String name, Double price, Integer quantity){
+    public OrderItemDTO(Long productId, String name, Double price, Integer quantity, String imgUrl){
         this.productId = productId;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.imgUrl = imgUrl;
     }
 
     public OrderItemDTO(OrderItem entity){
@@ -24,9 +29,10 @@ public class OrderItemDTO {
         this.name = entity.getProduct().getName();
         this.price = entity.getPrice();
         this.quantity = entity.getQuantity();
+        this.imgUrl = entity.getProduct().getImgUrl();
     }
 
-    // GETTERS
+    // Getters
     public Long getProductId(){
         return productId;
     }
@@ -43,7 +49,11 @@ public class OrderItemDTO {
         return quantity;
     }
 
-    // ✅ SETTERS (ESSENCIAIS)
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    // Setters
     public void setProductId(Long productId) {
         this.productId = productId;
     }
@@ -63,4 +73,6 @@ public class OrderItemDTO {
     public Double getSubTotal(){
         return price * quantity;
     }
+
+
 }
