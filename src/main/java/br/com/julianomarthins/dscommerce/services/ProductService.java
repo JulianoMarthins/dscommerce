@@ -2,6 +2,7 @@ package br.com.julianomarthins.dscommerce.services;
 
 
 import br.com.julianomarthins.dscommerce.dto.ProductDTO;
+import br.com.julianomarthins.dscommerce.dto.ProductMinDTO;
 import br.com.julianomarthins.dscommerce.entities.Product;
 import br.com.julianomarthins.dscommerce.respositories.ProductRepository;
 import br.com.julianomarthins.dscommerce.services.exceptions.DatabaseException;
@@ -9,7 +10,6 @@ import br.com.julianomarthins.dscommerce.services.exceptions.ResourceNotFoundExc
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -36,9 +36,9 @@ public class ProductService {
 
     // Retorna ao usuário todos os produtos organizados por páginas
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+    public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
         Page<Product> result = repository.searchByName(name, pageable);
-        return result.map(ProductDTO::new);
+        return result.map(ProductMinDTO::new);
     }
 
     // Adiciona um novo produto ao banco de dados
