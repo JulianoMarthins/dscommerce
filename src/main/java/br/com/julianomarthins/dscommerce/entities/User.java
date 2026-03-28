@@ -24,6 +24,7 @@ public class User implements UserDetails {
     private LocalDate birthDate;
     private String password;
 
+
     @ManyToMany
     @JoinTable(
             name = "tb_user_role",

@@ -2,16 +2,22 @@ package br.com.julianomarthins.dscommerce.services;
 
 import java.util.List;
 
+import br.com.julianomarthins.dscommerce.dto.UserDTO;
 import br.com.julianomarthins.dscommerce.entities.Role;
 import br.com.julianomarthins.dscommerce.entities.User;
 import br.com.julianomarthins.dscommerce.projections.UserDetailsProjection;
 import br.com.julianomarthins.dscommerce.respositories.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -38,5 +44,29 @@ public class UserService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    // Verifica que existe usuário logado
+    protected User authenticated(){
+
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
+            String username = jwtPrincipal.getClaim("username");
+
+            User user = repository.findByEmail(username).get();
+
+            return user;
+        }
+        catch (Exception e) {
+            throw new UsernameNotFoundException("Email not found");
+        }
+    }
+
+    // Retorna o usuário logado
+    @Transactional(readOnly = true)
+    public UserDTO getME(){
+        User user = authenticated();
+        return new UserDTO(user);
     }
 }
