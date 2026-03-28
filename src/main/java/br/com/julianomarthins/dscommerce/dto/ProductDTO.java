@@ -1,10 +1,15 @@
 package br.com.julianomarthins.dscommerce.dto;
 
 
+import br.com.julianomarthins.dscommerce.entities.Category;
 import br.com.julianomarthins.dscommerce.entities.Product;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ProductDTO {
@@ -20,6 +25,9 @@ public class ProductDTO {
     @Positive(message = "O preço deve ser positivo")
     private Double price;
     private String img;
+
+    @NotEmpty(message = "Obrigado adicionar uma categoria")
+    private List<CategoryDTO> categories = new ArrayList<>();
 
 
     // Construtores
@@ -41,6 +49,10 @@ public class ProductDTO {
         this.description = entity.getDescription();
         this.price = entity.getPrice();
         this.img = entity.getImgUrl();
+
+        for (Category category : entity.getCategories()){
+            this.categories.add(new CategoryDTO(category));
+        }
     }
 
 
@@ -63,5 +75,9 @@ public class ProductDTO {
 
     public String getImg() {
         return img;
+    }
+
+    public List<CategoryDTO> getCategories(){
+       return categories;
     }
 }

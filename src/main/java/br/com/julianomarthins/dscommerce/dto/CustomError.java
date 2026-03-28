@@ -19,7 +19,7 @@ public class CustomError {
         this.path = path;
     }
 
-    // region Getters
+    // Getters
     public Instant getTimestamp() {
         return timestamp;
     }
@@ -35,5 +35,5 @@ public class CustomError {
     public String getPath() {
         return path;
     }
-    //endregion
+
 }

@@ -1,8 +1,10 @@
 package br.com.julianomarthins.dscommerce.services;
 
 
+import br.com.julianomarthins.dscommerce.dto.CategoryDTO;
 import br.com.julianomarthins.dscommerce.dto.ProductDTO;
 import br.com.julianomarthins.dscommerce.dto.ProductMinDTO;
+import br.com.julianomarthins.dscommerce.entities.Category;
 import br.com.julianomarthins.dscommerce.entities.Product;
 import br.com.julianomarthins.dscommerce.respositories.ProductRepository;
 import br.com.julianomarthins.dscommerce.services.exceptions.DatabaseException;
@@ -85,6 +87,15 @@ public class ProductService {
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgUrl(dto.getImg());
+
+        entity.getCategories().clear();
+
+        for (CategoryDTO catDTO : dto.getCategories()){
+            Category cat = new Category();
+            cat.setId(catDTO.getId());
+            entity.getCategories().add(cat);
+        }
+
     }
 
 
