@@ -12,7 +12,7 @@ import br.com.julianomarthins.dscommerce.enuns.OrderStatus;
 import br.com.julianomarthins.dscommerce.respositories.OrderItemRepository;
 import br.com.julianomarthins.dscommerce.respositories.OrderRepository;
 import br.com.julianomarthins.dscommerce.respositories.ProductRepository;
-import br.com.julianomarthins.dscommerce.services.exceptions.ResourceNotFoundException;
+import br.com.julianomarthins.dscommerce.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,11 +35,17 @@ public class OrderService {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
+    @Autowired
+    private AuthService authService;
+
 
     @Transactional(readOnly = true)
     public OrderDTO findById(Long id){
         Order order = repository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Recurso não encontrado"));
+
+        authService.validateSelfOrAdmin(order.getClient().getId());
+
         return new OrderDTO(order);
     }
 
