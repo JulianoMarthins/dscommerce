@@ -4,13 +4,14 @@ import br.com.julianomarthins.dscommerce.entities.OrderItem;
 
 public class OrderItemDTO {
 
-    // Atributos
     private Long productId;
     private String name;
     private Double price;
     private Integer quantity;
 
-    // Construtores
+    public OrderItemDTO(){
+    }
+
     public OrderItemDTO(Long productId, String name, Double price, Integer quantity){
         this.productId = productId;
         this.name = name;
@@ -25,9 +26,9 @@ public class OrderItemDTO {
         this.quantity = entity.getQuantity();
     }
 
-    // Getter
+    // GETTERS
     public Long getProductId(){
-        return this.productId;
+        return productId;
     }
 
     public String getName() {
@@ -42,9 +43,24 @@ public class OrderItemDTO {
         return quantity;
     }
 
+    // ✅ SETTERS (ESSENCIAIS)
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
 
-    // Métodos
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
     public Double getSubTotal(){
-        return this.price * this.quantity;
+        return price * quantity;
     }
 }

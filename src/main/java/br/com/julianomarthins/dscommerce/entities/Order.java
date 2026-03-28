@@ -4,10 +4,7 @@ import br.com.julianomarthins.dscommerce.enuns.OrderStatus;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity // Transforma a classe em tabela no banco de dados
 @Table(name = "tb_order") // Nome a tabela conforme parâmetro passado em argumento
@@ -30,7 +27,7 @@ public class Order {
     private Payment payment;
 
     @OneToMany(mappedBy = "id.order")
-    private Set<OrderItem> items = new HashSet<>();
+    private List<OrderItem> items = new ArrayList<>();
 
 
     // Construtores
@@ -103,7 +100,7 @@ public class Order {
         this.payment = payment;
     }
 
-    public Set<OrderItem> getItems() {
+    public List<OrderItem> getItems() {
         return items;
     }
 
