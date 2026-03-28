@@ -11,5 +11,7 @@ public class DscommerceApplication  {
 	public static void main(String[] args) {
 
 		SpringApplication.run(DscommerceApplication.class, args);
+
+		System.out.println("Programado por Juliano Martins de Souza");
 	}
 }
